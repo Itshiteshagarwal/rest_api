@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('../model/user');
+const bodyParser = require('body-parser');
+
 
 
 router.post('/signup',(req,res,next)=>{
