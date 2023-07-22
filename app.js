@@ -9,6 +9,7 @@ const addcartRoute = require('./api/routes/add_cart')
 const removeRoute = require('./api/routes/remove_cart')
 const getRoute = require('./api/routes/get_item')
 const productRoute = require('./api/routes/products')
+const homeRoute = require('./api/routes/home')
 
 
 
@@ -24,13 +25,13 @@ mongoose.connection.on('connected',connected=>{
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-
 app.use('/user',userRoute);
 app.use('/user_login',userloginRoute);
 app.use('/add_cart',addcartRoute);
 app.use('/remove_cart',removeRoute);
 app.use('/get_item',getRoute);
 app.use('/products',productRoute);
+app.use('/',homeRoute);
 
 app.use((req,res,next)=>{
     res.status(404).json({
