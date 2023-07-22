@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const userRoute = require('./api/routes/user')
@@ -11,7 +12,7 @@ const productRoute = require('./api/routes/products')
 
 
 
-mongoose.connect('mongodb+srv://hitesh:hgarg5162@hitesh.mm673vo.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URL)
 
 mongoose.connection.on('error',err=>{
     console.log('connection failed');
