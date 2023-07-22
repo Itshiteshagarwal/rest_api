@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 
+
+router.use(express.json());
 router.post('/login', (req, res, next)=>{
     User.find({username:req.body.username})
     .exec()
