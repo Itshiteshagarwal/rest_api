@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const mongoose = require('mongoose')
+const cors = require('cors')
 const bodyParser = require('body-parser');
 const userRoute = require('./api/routes/user')
 const userloginRoute = require('./api/routes/user_login')
@@ -32,6 +33,7 @@ app.use('/remove_cart',removeRoute);
 app.use('/get_item',getRoute);
 app.use('/products',productRoute);
 app.use('/',homeRoute);
+app.use(cors());
 
 app.use((req,res,next)=>{
     res.status(404).json({
