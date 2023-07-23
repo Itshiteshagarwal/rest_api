@@ -1,34 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/Cart');
-const Product = require('../models/Product');
+const Cart = require('../models/cart'); // Replace 'cart' with the appropriate model for your cart table
 
-// Route to add a product to the cart
-router.post('/api/cart', async (req, res) => {
+// Add a product to the cart
+router.post('/api/add_to_cart', async (req, res) => {
   try {
-    const { productId, productName, productPrice, productImage } = req.body;
-    const userId = 'your_user_id'; // Replace this with the user ID of the logged-in user (you can get this from your authentication mechanism)
+    const { productId, productName, productPrice, quantity } = req.body;
 
-    // Check if the product exists in the database based on the product ID
-    const product = await Product.findById(productId);
-    if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
-    }
-
-    // Find the user's cart or create a new cart if it doesn't exist
-    let cart = await Cart.findOne({ userId });
+    // Find the cart or create a new cart if it doesn't exist
+    let cart = await Cart.findOne();
     if (!cart) {
-      cart = new Cart({ userId, products: [] });
+      cart = new Cart({ products: [] });
     }
 
-    // Add the product to the cart
-    cart.products.push(product);
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.products.findIndex(
+      (item) => item.productId.toString() === productId
+    );
+    if (existingProductIndex !== -1) {
+      return res.status(400).json({ error: 'Product already exists in the cart' });
+    }
+
+    // Add the product with the given quantity to the cart
+    cart.products.push({ productId, productName, productPrice, quantity });
 
     // Save the updated cart to the database
     const updatedCart = await cart.save();
     res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Error adding product to cart' });
   }
 });
