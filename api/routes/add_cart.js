@@ -29,8 +29,9 @@ router.post('/add_to_cart', async (req, res) => {
       const existingProductIndex = existingCart.products.findIndex((product) => product.productName === productName);
 
       if (existingProductIndex !== -1) {
-        // If the product exists, update the quantity or any other properties you need
+        // If the product exists, update the quantity and the product price
         existingCart.products[existingProductIndex].quantity += quantity;
+        existingCart.products[existingProductIndex].productPrice = productPrice; // Update the product price based on the quantity
       } else {
         // If the product does not exist, add it to the cart
         existingCart.products.push({
