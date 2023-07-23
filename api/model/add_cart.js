@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const cartSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId to link it to a User model if you have one.
-    required: true
-  },
   products: [
     {
       productId: {
