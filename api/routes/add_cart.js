@@ -31,7 +31,7 @@ router.post('/add_to_cart', async (req, res) => {
       if (existingProductIndex !== -1) {
         // If the product exists, update the quantity and the product price
         existingCart.products[existingProductIndex].quantity += quantity;
-        existingCart.products[existingProductIndex].productPrice = productPrice; // Update the product price based on the quantity
+        existingCart.products[existingProductIndex].productPrice = productPrice*quantity; // Update the product price based on the quantity
       } else {
         // If the product does not exist, add it to the cart
         existingCart.products.push({
