@@ -13,8 +13,6 @@ const productRoute = require('./api/routes/products')
 const homeRoute = require('./api/routes/home')
 const addRoute = require('./api/routes/add_product')
 
-
-
 mongoose.connect(process.env.MONGO_URL)
 
 mongoose.connection.on('error',err=>{

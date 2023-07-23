@@ -5,17 +5,13 @@ const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 
-// Enable CORS to allow requests from the frontend domain (replace 'your_frontend_domain' with the actual domain)
+// Enable CORS to allow requests from any frontend domain
 router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'your_frontend_domain');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'POST');
-    return res.status(200).json({});
-  }
-  next();
-});
-
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Methods', '*'); // Allow all methods (GET, POST, PUT, DELETE, etc.)
+    next();
+  });
 router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
 
