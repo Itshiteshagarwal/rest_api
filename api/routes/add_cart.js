@@ -21,24 +21,31 @@ router.post('/add_to_cart', async (req, res) => {
   }
 
   try {
-    // Check if the cart already exists for the user
-    const existingCart = await Cart.findOne({ userId: 'replace_with_user_id' }); // Replace with the actual user ID, if available
+    // Check if the cart already exists
+    const existingCart = await Cart.findOne();
 
     if (existingCart) {
-      // If the cart exists, update the existing cart with the new product
-      existingCart.products.push({
-        productId,
-        productName,
-        productPrice,
-        quantity,
-      });
+      // Check if the product already exists in the cart
+      const existingProduct = existingCart.products.find((product) => product.productName === productName);
+
+      if (existingProduct) {
+        // If the product exists, update the quantity or any other properties you need
+        existingProduct.quantity += quantity;
+      } else {
+        // If the product does not exist, add it to the cart
+        existingCart.products.push({
+          productId,
+          productName,
+          productPrice,
+          quantity,
+        });
+      }
 
       await existingCart.save();
       res.json({ message: 'Item added to the cart.', cart: existingCart });
     } else {
       // If the cart does not exist, create a new cart
       const newCart = await Cart.create({
-        userId: 'replace_with_user_id', // Replace this with the actual user ID, if available
         products: [{
           productId,
           productName,
