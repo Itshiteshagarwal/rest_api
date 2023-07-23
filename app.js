@@ -11,6 +11,7 @@ const removeRoute = require('./api/routes/remove_cart')
 const getRoute = require('./api/routes/get_item')
 const productRoute = require('./api/routes/products')
 const homeRoute = require('./api/routes/home')
+const addRoute = require('./api/routes/add_product')
 
 
 
@@ -37,6 +38,7 @@ app.use('/get_item',getRoute);
 app.use('/products',productRoute);
 app.use('/',homeRoute);
 app.use(cors());
+app.use('/add_product',addRoute);
 
 
 app.use((req,res,next)=>{

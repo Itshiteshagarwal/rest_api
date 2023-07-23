@@ -1,33 +1,42 @@
 const express = require('express');
 const router = express.Router();
 const Cart = require('../model/add_cart');
+const Product = require('../model/products');
+const mongoose = require('mongoose');
 
-router.post('/cart', (req, res) => {
-  const { productId, name, price } = req.body;
-  const quantity = 1; // Set the base quantity as one
+// Add a product to the cart
+router.post('/api/cart', async (req, res) => {
+  try {
+    const { username, productId, quantity } = req.body;
 
-  // Check if the item already exists in the cart
-  Cart.findOne({ productId })
-    .then(existingItem => {
-      if (existingItem) {
-        // Item already exists, increase the quantity by one and update the price
-        existingItem.quantity += quantity;
-        existingItem.price = price * existingItem.quantity;
-        return existingItem.save();
-      }
+    // Check if the product exists in the database
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
 
-      // Item does not exist, add it to the cart with the base quantity and price
-      const newItem = new Cart({
-        productId,
-        name,
-        price: price * quantity,
-        quantity
-      });
+    // Find the user's cart or create a new cart if it doesn't exist
+    let cart = await Cart.findOne({ username });
+    if (!cart) {
+      cart = new Cart({ username, products: [] });
+    }
 
-      return newItem.save();
-    })
-    .then(() => res.status(201).json({ message: 'Item added to cart successfully' }))
-    .catch(error => res.status(500).json({ error: 'Failed to add item to cart' }));
+    // Check if the product is already in the cart
+    const existingProduct = cart.products.find((item) => item.productId.toString() === productId);
+    if (existingProduct) {
+      // If the product is already in the cart, update the quantity
+      existingProduct.quantity += quantity;
+    } else {
+      // If the product is not in the cart, add it with the given quantity
+      cart.products.push({ productId: mongoose.Types.ObjectId(productId), quantity });
+    }
+
+    // Save the updated cart to the database
+    const updatedCart = await cart.save();
+    res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
+  } catch (err) {
+    res.status(500).json({ error: 'Error adding product to cart', err });
+  }
 });
 
 module.exports = router;
