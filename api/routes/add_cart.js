@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Cart = require('../model/add_cart'); // Replace 'cart' with the appropriate model for your cart table
 
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', '*'); // Allow all methods (GET, POST, PUT, DELETE, etc.)
+  next();
+});
 // Add a product to the cart
 router.post('/api/add_to_cart', async (req, res) => {
   try {
@@ -26,21 +32,9 @@ router.post('/api/add_to_cart', async (req, res) => {
 
     // Save the updated cart to the database
     const updatedCart = await cart.save();
-
-    // Set appropriate headers to allow frontend access
-    res.set('Content-Type', 'application/json');
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
     res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
   } catch (err) {
     console.error(err);
-
-    // Set appropriate headers to allow frontend access
-    res.set('Content-Type', 'application/json');
-    res.set('Access-Control-Allow-Origin', '*');
-    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-
     res.status(500).json({ error: 'Error adding product to cart' });
   }
 });
