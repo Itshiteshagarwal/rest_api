@@ -39,7 +39,7 @@ router.post('/login', (req, res, next) => {
             username: user.username,
             email: user.email,
             token: token,
-            redirectURL: '/home.html' // Modify this URL according to your home page URL
+            redirectURL: 'http://127.0.0.1:5500/home.html' // Modify this URL according to your home page URL
           });
         }
       });
