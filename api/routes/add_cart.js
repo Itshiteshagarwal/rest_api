@@ -7,7 +7,10 @@ const User = require('../model/user');
 // Add a product to the cart
 router.post('/api/cart', async (req, res) => {
   try {
-    const { username, productName, quantity } = req.body;
+    const { productName, quantity } = req.body;
+
+    // Assuming you have implemented authentication and obtained the username from the user's context
+    const username = req.user.username; // Replace 'username' with the field in the user's authentication context that stores the username
 
     // Find the user in the user table
     const user = await User.findOne({ username });
