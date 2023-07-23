@@ -4,16 +4,11 @@ const Product = require('../model/products');
 
 router.get('/api/products', async (req, res) => {
   try {
-    const { sortBy } = req.query;
-    let sortOption = {};
+    const { categoryId } = req.query;
 
-    if (sortBy === 'lowToHigh') {
-      sortOption = { price: 1 }; // Sort by price in ascending order
-    } else if (sortBy === 'highToLow') {
-      sortOption = { price: -1 }; // Sort by price in descending order
-    }
+    // Assuming your Product model has a field called "categoryId" to filter products by category
+    const products = await Product.find({ categoryId: categoryId }).sort({ price: 1 });
 
-    const products = await Product.find().sort(sortOption);
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
