@@ -40,10 +40,16 @@ router.post('/api/cart', async (req, res) => {
 
     // Save the updated cart to the database
     const updatedCart = await cart.save();
-    res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
+    res.status(201)
+      .header('Content-Type', 'application/json')
+      .header('Access-Control-Allow-Origin', '*') // Set appropriate CORS headers to allow frontend access
+      .json({ message: 'Product added to cart', cart: updatedCart });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Error adding product to cart' });
+    res.status(500)
+      .header('Content-Type', 'application/json')
+      .header('Access-Control-Allow-Origin', '*') // Set appropriate CORS headers to allow frontend access
+      .json({ error: 'Error adding product to cart' });
   }
 });
 
