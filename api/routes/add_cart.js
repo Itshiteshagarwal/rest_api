@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../model/add_cart'); 
+const Cart = require('../model/add_cart');
 
 // Set appropriate headers to allow frontend access
 router.use((req, res, next) => {
@@ -21,24 +21,38 @@ router.post('/add_to_cart', async (req, res) => {
   }
 
   try {
-    // Create a new cart document in the database
-    const cart = await Cart.create({
-      userId: 'replace_with_user_id', // Replace this with the actual user ID, if available
-      products: [{
+    // Check if the cart already exists for the user
+    const existingCart = await Cart.findOne({ userId: 'replace_with_user_id' }); // Replace with the actual user ID, if available
+
+    if (existingCart) {
+      // If the cart exists, update the existing cart with the new product
+      existingCart.products.push({
         productId,
         productName,
         productPrice,
         quantity,
-      }],
-    });
+      });
 
-    // Respond with a success message
-    res.json({ message: 'Item added to the cart.', cart });
+      await existingCart.save();
+      res.json({ message: 'Item added to the cart.', cart: existingCart });
+    } else {
+      // If the cart does not exist, create a new cart
+      const newCart = await Cart.create({
+        userId: 'replace_with_user_id', // Replace this with the actual user ID, if available
+        products: [{
+          productId,
+          productName,
+          productPrice,
+          quantity,
+        }],
+      });
+
+      res.json({ message: 'Item added to the cart.', cart: newCart });
+    }
   } catch (error) {
     console.error('Error while adding product to cart:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 module.exports = router;
