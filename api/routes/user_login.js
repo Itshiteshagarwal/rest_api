@@ -6,49 +6,48 @@ const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 
 router.post('/login', (req, res, next) => {
-  console.log(req.body);
-  User.findOne({ username: req.body.username })
+  const { username, password } = req.body;
+
+  User.findOne({ username })
     .exec()
     .then(user => {
       if (!user) {
-        return res.status(401).json({
-          msg: 'User not found'
-        });
+        return res.status(401).json({ msg: 'User not found' });
       }
 
-      bcrypt.compare(req.body.password, user.password, (err, result) => {
-        if (!result) {
-          return res.status(401).json({
-            msg: 'Password not matched'
-          });
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (err) {
+          return res.status(500).json({ error: 'Something went wrong' });
         }
 
-        if (result) {
-          const token = jwt.sign(
-            {
-              username: user.username,
-              email: user.email
-            },
-            'this is dummy text',
-            {
-              expiresIn: '24h'
-            }
-          );
+        if (!result) {
+          return res.status(401).json({ msg: 'Password does not match' });
+        }
 
-          res.status(200).json({
+        // Password matches, create a JSON Web Token (JWT)
+        const token = jwt.sign(
+          {
+            userId: user._id,
             username: user.username,
             email: user.email,
-            token: token,
-            redirectURL: 'http://127.0.0.1:5500/home.html' // Modify this URL according to your home page URL
-          });
-        }
+          },
+          'your_secret_key_here',
+          {
+            expiresIn: '24h',
+          }
+        );
+
+        // Send success message and token back to the login page
+        res.status(200).json({ msg: 'User login successful', token });
+
+        // Redirect the user to the home page (assuming the home page URL is '/home')
+        // Alternatively, you can use JavaScript to redirect on the client side after receiving the success response.
+        // res.redirect('/home');
       });
     })
     .catch(err => {
       console.log(err);
-      res.status(500).json({
-        error: err
-      });
+      res.status(500).json({ error: 'Server error' });
     });
 });
 
