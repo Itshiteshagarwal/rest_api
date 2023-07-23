@@ -43,7 +43,8 @@ router.post('/api/cart', async (req, res) => {
     const updatedCart = await cart.save();
     res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
   } catch (err) {
-    res.status(500).json({ error: 'Error adding product to cart', err });
+    console.error(err); // Log the error to the console for debugging purposes
+    res.status(500).json({ error: 'Error adding product to cart' });
   }
 });
 
