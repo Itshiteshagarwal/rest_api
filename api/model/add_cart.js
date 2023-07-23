@@ -1,4 +1,3 @@
-// models/cart.js
 const mongoose = require('mongoose');
 
 const cartSchema = new mongoose.Schema({
@@ -10,7 +9,7 @@ const cartSchema = new mongoose.Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Products' // Use the correct model name ('Product') to reference the Product model.
+        ref: 'products' // Use the correct model name ('Product') to reference the Product model.
       },
       productName: {
         type: String,

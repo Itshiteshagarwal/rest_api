@@ -28,20 +28,20 @@ router.post('/api/add_to_cart', async (req, res) => {
     const updatedCart = await cart.save();
 
     // Set appropriate headers to allow frontend access
-    res.status(201)
-      .header('Content-Type', 'application/json')
-      .header('Access-Control-Allow-Origin', '*')
-      .header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.set('Content-Type', 'application/json');
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-    res.json({ message: 'Product added to cart', cart: updatedCart });
+    res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
   } catch (err) {
     console.error(err);
-    res.status(500)
-      .header('Content-Type', 'application/json')
-      .header('Access-Control-Allow-Origin', '*')
-      .header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
-    res.json({ error: 'Error adding product to cart' });
+    // Set appropriate headers to allow frontend access
+    res.set('Content-Type', 'application/json');
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+    res.status(500).json({ error: 'Error adding product to cart' });
   }
 });
 
