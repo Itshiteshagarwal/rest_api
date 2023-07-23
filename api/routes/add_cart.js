@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../models/cart'); // Replace 'cart' with the appropriate model for your cart table
+const Cart = require('../model/add_cart'); // Replace 'cart' with the appropriate model for your cart table
 
 // Add a product to the cart
 router.post('/api/add_to_cart', async (req, res) => {
