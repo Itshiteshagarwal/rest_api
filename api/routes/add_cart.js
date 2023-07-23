@@ -22,10 +22,10 @@ router.post('/api/cart', async (req, res) => {
     }
 
     // Check if the product is already in the cart
-    const existingProduct = cart.products.find((item) => item.productId.toString() === productId);
-    if (existingProduct) {
+    const existingProductIndex = cart.products.findIndex((item) => item.productId.toString() === productId);
+    if (existingProductIndex !== -1) {
       // If the product is already in the cart, update the quantity
-      existingProduct.quantity += quantity;
+      cart.products[existingProductIndex].quantity += quantity;
     } else {
       // If the product is not in the cart, add it with the given quantity
       cart.products.push({ productId: mongoose.Types.ObjectId(productId), quantity });
