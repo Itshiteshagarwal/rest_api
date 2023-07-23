@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Cart = require('../model/add_cart'); // Replace 'cart' with the appropriate model for your cart table
+const Cart = require('../model/add_cart'); 
 
 // Set appropriate headers to allow frontend access
 router.use((req, res, next) => {
@@ -11,39 +11,34 @@ router.use((req, res, next) => {
 });
 
 // Add a product to the cart
-router.post('/api/add_to_cart', async (req, res) => {
+router.post('/add_to_cart', async (req, res) => {
+  const { productId, productName, productPrice } = req.body;
+  const quantity = 1; // You can get the quantity from the request if needed
+
+  // Validation: Check if all required data is present
+  if (!productId || !productName || !productPrice) {
+    return res.status(400).json({ error: 'Missing required data' });
+  }
+
   try {
-    const { productId, productName, productPrice, quantity } = req.body;
+    // Create a new cart document in the database
+    const cart = await Cart.create({
+      userId: 'replace_with_user_id', // Replace this with the actual user ID, if available
+      products: [{
+        productId,
+        productName,
+        productPrice,
+        quantity,
+      }],
+    });
 
-    // You might need to change this logic based on your use case.
-    // If you have a user authentication system, you should associate the cart with the user.
-    // For now, we are finding the cart without any filters, which will give you the first cart in the collection.
-    let cart = await Cart.findOne();
-
-    if (!cart) {
-      // If no cart is found, create a new cart with an empty products array.
-      cart = new Cart({ products: [] });
-    }
-
-    // Check if the product is already in the cart
-    const existingProductIndex = cart.products.findIndex(
-      (item) => item.productId.toString() === productId
-    );
-    if (existingProductIndex !== -1) {
-      return res.status(400).json({ error: 'Product already exists in the cart' });
-    }
-
-    // Add the product with the given quantity to the cart
-    cart.products.push({ productId, productName, productPrice, quantity });
-
-    // Save the updated cart to the database
-    const updatedCart = await cart.save();
-
-    res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error adding product to cart' });
+    // Respond with a success message
+    res.json({ message: 'Item added to the cart.', cart });
+  } catch (error) {
+    console.error('Error while adding product to cart:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 module.exports = router;
