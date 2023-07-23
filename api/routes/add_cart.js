@@ -22,9 +22,9 @@ router.post('/api/cart', async (req, res) => {
     }
 
     // Find the user's cart or create a new cart if it doesn't exist
-    let cart = await Cart.findOne({ user: user._id });
+    let cart = await Cart.findOne({ userId: user._id });
     if (!cart) {
-      cart = new Cart({ user: user._id, products: [] });
+      cart = new Cart({ userId: user._id, products: [] });
     }
 
     // Check if the product is already in the cart
@@ -42,7 +42,8 @@ router.post('/api/cart', async (req, res) => {
     const updatedCart = await cart.save();
     res.status(201).json({ message: 'Product added to cart', cart: updatedCart });
   } catch (err) {
-    res.status(500).json({ error: 'Error adding product to cart', err });
+    console.error(err);
+    res.status(500).json({ error: 'Error adding product to cart' });
   }
 });
 
