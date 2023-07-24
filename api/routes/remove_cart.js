@@ -16,21 +16,35 @@ router.delete('/remove_cart', async (req, res) => {
   const { username } = req.headers; // Get the 'username' from the request headers
 
   try {
-    // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndUpdate(
-      { username },
-      { $pull: { products: { productName } } }, // Use productName to remove the specific product
-      { new: true }
-    );
+    // Find the cart item by productName and the associated username
+    const cartItem = await CartItem.findOne({ username });
 
-    if (!removedItem) {
+    if (!cartItem) {
       return res.status(404).json({ error: 'Item not found in cart' });
     }
 
-    res.json({ message: 'Item deleted from cart successfully' });
+    // Find the specific product in the cart by productName
+    const productToRemove = cartItem.products.find(product => product.productName === productName);
+
+    if (!productToRemove) {
+      return res.status(404).json({ error: 'Product not found in cart' });
+    }
+
+    // If the quantity is greater than 1, decrement the quantity by 1
+    if (productToRemove.quantity > 1) {
+      productToRemove.quantity -= 1;
+    } else {
+      // If the quantity is 1, remove the product from the products array
+      cartItem.products = cartItem.products.filter(product => product.productName !== productName);
+    }
+
+    // Save the updated cart item
+    await cartItem.save();
+
+    res.json({ message: 'Item removed from cart successfully' });
   } catch (error) {
-    console.error('Error while deleting item:', error);
-    res.status(500).json({ error: 'Failed to delete item from cart' });
+    console.error('Error while removing item:', error);
+    res.status(500).json({ error: 'Failed to remove item from cart' });
   }
 });
 
