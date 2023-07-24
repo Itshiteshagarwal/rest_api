@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const { v4: uuidv4 } = require('uuid');
 
 const cartSchema = new mongoose.Schema({
   userId: {
-    type:String,
-    required: true,
+    type: { type: String, required: true, unique: true, default: uuidv4 },
     ref: 'User' // Use the correct model name ('User') to reference the User model.
   },
   products: [
