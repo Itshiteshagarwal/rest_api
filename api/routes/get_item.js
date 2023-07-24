@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
-  const { userId } = req.query; // Assuming the user ID is passed in the query parameters
+  const { userId } = req.headers;
 
   // Perform user authentication here (e.g., check the user ID against the database or JWT)
   // For simplicity, we will assume the user is authenticated by checking if userId exists.
