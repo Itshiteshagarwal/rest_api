@@ -26,7 +26,6 @@ const authenticateUser = (req, res, next) => {
 };
 
 // Add a product to the cart
-// Add a product to the cart
 router.post('/add_to_cart', authenticateUser, async (req, res) => {
   const { userId, productId, productName, productPrice } = req.body;
   const quantity = 1; // You can get the quantity from the request if needed
@@ -70,6 +69,4 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
   }
 });
 
-
 module.exports = router;
-
