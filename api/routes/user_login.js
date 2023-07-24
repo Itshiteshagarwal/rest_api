@@ -11,7 +11,8 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
     res.header('Access-Control-Allow-Methods', '*'); // Allow all methods (GET, POST, PUT, DELETE, etc.)
     next();
-  });
+});
+
 router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
 
@@ -34,7 +35,7 @@ router.post('/login', (req, res, next) => {
         // Password matches, create a JSON Web Token (JWT)
         const token = jwt.sign(
           {
-            userId: user.userId,
+            userId: user.userId, // Use the userId field, which is uniquely created for each product
             username: user.username,
             email: user.email,
           },
