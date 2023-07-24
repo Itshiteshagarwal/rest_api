@@ -10,7 +10,7 @@ router.use((req, res, next) => {
 });
 
 // API endpoint to delete an item from the cart by product name
-router.delete('/api/remove-item', async (req, res) => {
+router.delete('/remove_cart', async (req, res) => {
   const { productName } = req.body;
   const { username } = req.headers; // Get the 'username' from the request headers
 
