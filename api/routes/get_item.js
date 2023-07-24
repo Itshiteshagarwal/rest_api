@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors');
 const Cart = require('../model/add_cart');
+
+app.use(cors({
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'userid'],
+}));
 
 // Set appropriate headers to allow frontend access
 router.use((req, res, next) => {
