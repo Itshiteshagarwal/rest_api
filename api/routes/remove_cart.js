@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const CartItem = require('../model/add_cart');
 
+// Enable CORS for all routes
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, username'); // Include 'username' in the allowed headers
@@ -32,6 +33,5 @@ router.delete('/remove_cart', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete item from cart' });
   }
 });
-
 
 module.exports = router;
