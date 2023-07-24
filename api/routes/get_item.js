@@ -5,31 +5,31 @@ const Cart = require('../model/add_cart');
 
 // Set appropriate headers to allow frontend access
 router.use(cors({
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'userid'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'userId'],
 }));
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
-  const { userid } = req.headers; // Use 'userid' instead of 'userId' for consistency with the header key
+  const { userId } = req.headers;
 
   // Perform user authentication here (e.g., check the user ID against the database or JWT)
-  // For simplicity, we will assume the user is authenticated by checking if userid exists.
-  if (!userid) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  // For simplicity, we will assume the user is authenticated by checking if userId exists.
+  if (!userId) {
+    return res.status(401).json({ error: 'Unauthorized: User ID not provided in the headers.' });
   }
 
-  // Attach the authenticated userid to the request object for later use
-  req.userid = userid;
+  // Attach the authenticated userId to the request object for later use
+  req.userId = userId;
   next();
 };
 
 // Get the cart data
 router.get('/cart_items', authenticateUser, async (req, res) => {
-  const { userid } = req;
+  const { userId } = req;
 
   try {
     // Check if the cart exists for the user
-    const existingCart = await Cart.findOne({ userId: userid });
+    const existingCart = await Cart.findOne({ userId });
 
     if (existingCart) {
       res.json({ cart: existingCart });
