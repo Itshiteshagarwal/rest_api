@@ -25,6 +25,10 @@ const cartSchema = new mongoose.Schema({
         default: 1,
         min: 1, // Ensure the quantity is always at least 1.
       },
+      productImage: {
+        type: String, // Assuming the product image will be stored as a URL or file path.
+        required: true,
+      },
     },
   ],
 });

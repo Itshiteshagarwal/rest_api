@@ -57,6 +57,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
         productId,
         productName,
         productPrice,
+        productImage,
         quantity,
       });
     }
