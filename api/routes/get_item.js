@@ -10,6 +10,21 @@ router.use((req, res, next) => {
   next();
 });
 
+// Middleware to handle user authentication
+const authenticateUser = (req, res, next) => {
+  const { userId } = req.headers;
+
+  // Perform user authentication here (e.g., check the user ID against the database or JWT)
+  // For simplicity, we will assume the user is authenticated by checking if userId exists.
+  if (!userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Attach the authenticated userId to the request object for later use
+  req.userId = userId;
+  next();
+};
+
 // Get the cart data
 router.get('/cart_items', authenticateUser, async (req, res) => {
   const { userId } = req;
