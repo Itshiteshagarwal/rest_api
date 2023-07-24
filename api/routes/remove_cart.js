@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const CartItem = require('../model/add_cart');
+const cors = require('cors'); 
 
-
-router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify the allowed methods for CORS
-  next();
-});
-
-
+router.use(cors({
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Add 'Authorization' to the allowedHeaders
+}));
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
   // Assuming the username is stored in the request object after authentication
@@ -26,6 +21,7 @@ const authenticateUser = (req, res, next) => {
   req.username = username;
   next();
 };
+
 router.delete('/api/remove-item', authenticateUser, async (req, res) => {
   const { productName, username } = req.body;
 
@@ -43,7 +39,5 @@ router.delete('/api/remove-item', authenticateUser, async (req, res) => {
     res.status(500).json({ error: 'Failed to delete item from cart' });
   }
 });
-
-
 
 module.exports = router;
