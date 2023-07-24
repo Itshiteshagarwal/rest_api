@@ -1,33 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const CartItem = require('../model/add_cart');
-const cors = require('cors'); 
 
-router.use(cors({
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Add 'Authorization' to the allowedHeaders
-}));
-// Middleware to handle user authentication
-const authenticateUser = (req, res, next) => {
-  // Assuming the username is stored in the request object after authentication
-  const { username } = req;
-
-  // Perform user authentication here (e.g., check the username against the database or JWT)
-  // For simplicity, we will assume the user is authenticated by checking if the username exists.
-  if (!username) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-
-  // Attach the authenticated username to the request object for later use
-  req.username = username;
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify the allowed methods for CORS
   next();
-};
+});
 
-router.delete('/api/remove-item', authenticateUser, async (req, res) => {
-  const { productName, username } = req.body;
+// API endpoint to delete an item from the cart by product name
+router.delete('/api/remove-item', async (req, res) => {
+  const { productName } = req.body;
 
   try {
-    // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndDelete({ productName, username });
+    // Find the cart item by productName and remove it
+    const removedItem = await CartItem.findOneAndDelete({ productName });
 
     if (!removedItem) {
       return res.status(404).json({ error: 'Item not found in cart' });
