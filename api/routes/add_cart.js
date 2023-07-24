@@ -26,6 +26,7 @@ const authenticateUser = (req, res, next) => {
 };
 
 // Add a product to the cart
+// Add a product to the cart
 router.post('/add_to_cart', authenticateUser, async (req, res) => {
   const { userId, productId, productName, productPrice } = req.body;
   const quantity = 1; // You can get the quantity from the request if needed
@@ -36,49 +37,39 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
   }
 
   try {
-    // Check if the cart already exists for the user
-    const existingCart = await Cart.findOne({ userId });
+    // Find the user's cart or create a new one if it doesn't exist
+    let userCart = await Cart.findOne({ userId });
 
-    if (existingCart) {
-      // Check if the product already exists in the cart
-      const existingProductIndex = existingCart.products.findIndex((product) => product.productId === productId);
-
-      if (existingProductIndex !== -1) {
-        // If the product exists, update the quantity and the product price
-        existingCart.products[existingProductIndex].quantity += quantity;
-        existingCart.products[existingProductIndex].productPrice += productPrice; // Update the product price based on the quantity
-      } else {
-        // If the product does not exist, add it to the cart
-        existingCart.products.push({
-          userId,
-          productId,
-          productName,
-          productPrice,
-          quantity,
-        });
-      }
-
-      await existingCart.save();
-      res.json({ message: 'Item added to the cart.', cart: existingCart });
-    } else {
-      // If the cart does not exist, create a new cart for the user
-      const newCart = await Cart.create({
-        userId,
-        products: [{
-          userId,
-          productId,
-          productName,
-          productPrice,
-          quantity,
-        }],
-      });
-
-      res.json({ message: 'Item added to the cart.', cart: newCart });
+    if (!userCart) {
+      userCart = await Cart.create({ userId, products: [] });
     }
+
+    // Check if the product already exists in the cart
+    const existingProductIndex = userCart.products.findIndex((product) => product.productId === productId);
+
+    if (existingProductIndex !== -1) {
+      // If the product exists, update the quantity and the product price
+      userCart.products[existingProductIndex].quantity += quantity;
+      userCart.products[existingProductIndex].productPrice += productPrice; // Update the product price based on the quantity
+    } else {
+      // If the product does not exist, add it to the cart
+      userCart.products.push({
+        userId, // Include the userId in the product entry
+        productId,
+        productName,
+        productPrice,
+        quantity,
+      });
+    }
+
+    await userCart.save();
+    res.json({ message: 'Item added to the cart.', cart: userCart });
   } catch (error) {
     console.error('Error while adding product to cart:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+
 module.exports = router;
+
