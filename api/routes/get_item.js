@@ -10,26 +10,26 @@ router.use(cors({
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
-  const { userId } = req.headers;
+  const { userid } = req.headers; // Use 'userid' instead of 'userId' for consistency with the header key
 
   // Perform user authentication here (e.g., check the user ID against the database or JWT)
-  // For simplicity, we will assume the user is authenticated by checking if userId exists.
-  if (!userId) {
+  // For simplicity, we will assume the user is authenticated by checking if userid exists.
+  if (!userid) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // Attach the authenticated userId to the request object for later use
-  req.userId = userId;
+  // Attach the authenticated userid to the request object for later use
+  req.userid = userid;
   next();
 };
 
 // Get the cart data
 router.get('/cart_items', authenticateUser, async (req, res) => {
-  const { userId } = req;
+  const { userid } = req;
 
   try {
     // Check if the cart exists for the user
-    const existingCart = await Cart.findOne({ userId });
+    const existingCart = await Cart.findOne({ userId: userid });
 
     if (existingCart) {
       res.json({ cart: existingCart });
