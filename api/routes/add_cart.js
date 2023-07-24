@@ -10,19 +10,34 @@ router.use((req, res, next) => {
   next();
 });
 
+// Middleware to handle user authentication
+const authenticateUser = (req, res, next) => {
+  const { userId } = req.body;
+
+  // Perform user authentication here (e.g., check the user ID against the database or JWT)
+  // For simplicity, we will assume the user is authenticated by checking if userId exists.
+  if (!userId) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Attach the authenticated userId to the request object for later use
+  req.userId = userId;
+  next();
+};
+
 // Add a product to the cart
-router.post('/add_to_cart', async (req, res) => {
-  const { productId, productName, productPrice } = req.body;
+router.post('/add_to_cart', authenticateUser, async (req, res) => {
+  const { userId, productId, productName, productPrice } = req.body;
   const quantity = 1; // You can get the quantity from the request if needed
 
   // Validation: Check if all required data is present
-  if (!productId || !productName || !productPrice) {
+  if (!userId || !productId || !productName || !productPrice) {
     return res.status(400).json({ error: 'Missing required data' });
   }
 
   try {
-    // Check if the cart already exists
-    const existingCart = await Cart.findOne();
+    // Check if the cart already exists for the user
+    const existingCart = await Cart.findOne({ userId });
 
     if (existingCart) {
       // Check if the product already exists in the cart
@@ -45,8 +60,9 @@ router.post('/add_to_cart', async (req, res) => {
       await existingCart.save();
       res.json({ message: 'Item added to the cart.', cart: existingCart });
     } else {
-      // If the cart does not exist, create a new cart
+      // If the cart does not exist, create a new cart for the user
       const newCart = await Cart.create({
+        userId,
         products: [{
           productId,
           productName,
