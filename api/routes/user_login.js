@@ -34,7 +34,7 @@ router.post('/login', (req, res, next) => {
         // Password matches, create a JSON Web Token (JWT)
         const token = jwt.sign(
           {
-            userId: user._id,
+            userId: user.userId,
             username: user.username,
             email: user.email,
           },
