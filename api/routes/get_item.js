@@ -11,19 +11,20 @@ router.use((req, res, next) => {
 });
 
 // Get the cart data
-router.get('/cart', async (req, res) => {
+router.get('/cart_items', authenticateUser, async (req, res) => {
+  const { userId } = req;
+
   try {
-    // Find the cart document
-    const cart = await Cart.findOne();
+    // Check if the cart exists for the user
+    const existingCart = await Cart.findOne({ userId });
 
-    if (!cart) {
-      return res.status(404).json({ error: 'Cart not found' });
+    if (existingCart) {
+      res.json({ cart: existingCart });
+    } else {
+      res.json({ cart: { products: [] } }); // Return an empty cart if it doesn't exist for the user
     }
-
-    // If the cart is found, return the cart data
-    res.json({ cart });
   } catch (error) {
-    console.error('Error while fetching cart data:', error);
+    console.error('Error while fetching cart items:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

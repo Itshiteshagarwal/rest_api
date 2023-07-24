@@ -79,23 +79,5 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
   }
 });
 
-// Get cart items for a user
-router.get('/cart_items', authenticateUser, async (req, res) => {
-  const { userId } = req;
-
-  try {
-    // Check if the cart exists for the user
-    const existingCart = await Cart.findOne({ userId });
-
-    if (existingCart) {
-      res.json({ cart: existingCart });
-    } else {
-      res.json({ cart: { products: [] } }); // Return an empty cart if it doesn't exist for the user
-    }
-  } catch (error) {
-    console.error('Error while fetching cart items:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
 
 module.exports = router;
