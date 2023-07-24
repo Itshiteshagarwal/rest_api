@@ -4,29 +4,20 @@ const cors = require('cors');
 const Cart = require('../model/add_cart');
 
 // Set appropriate headers to allow frontend access
-router.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
 router.use(cors({
-  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'userId'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Remove 'userid' from allowedHeaders
 }));
-
-
-
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
-  const { userId } = req.headers;
+  const authorizationHeader = req.headers.authorization;
 
-  // Perform user authentication here (e.g., check the user ID against the database or JWT)
-  // For simplicity, we will assume the user is authenticated by checking if userId exists.
-  if (!userId) {
-    return res.status(401).json({ error: 'Unauthorized: User ID not provided in the headers.' });
+  if (!authorizationHeader) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
+
+  // Assuming the authorization header value is the userId
+  const userId = authorizationHeader;
 
   // Attach the authenticated userId to the request object for later use
   req.userId = userId;
