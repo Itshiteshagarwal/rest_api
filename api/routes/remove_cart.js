@@ -16,7 +16,11 @@ router.delete('/remove_cart', async (req, res) => {
 
   try {
     // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndDelete({ productName, username });
+    const removedItem = await CartItem.findOneAndUpdate(
+      { username: { $elemMatch: { productName } } },
+      { $pull: { username: { productName } } },
+      { new: true }
+    );
 
     if (!removedItem) {
       return res.status(404).json({ error: 'Item not found in cart' });
@@ -28,5 +32,6 @@ router.delete('/remove_cart', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete item from cart' });
   }
 });
+
 
 module.exports = router;
