@@ -26,22 +26,24 @@ const authenticateUser = (req, res, next) => {
   req.username = username;
   next();
 };
+router.delete('/api/remove-item', authenticateUser, async (req, res) => {
+  const { productName, username } = req.body;
 
-router.delete('/api/remove-item', authenticateUser, (req, res) => {
-  const productName = req.body.productName;
-  const username = req.username;
+  try {
+    // Find the cart item by productName and the associated username and remove it
+    const removedItem = await CartItem.findOneAndDelete({ productName, username });
 
-  // Find the cart item by productName and the associated username and remove it
-  CartItem.findOneAndDelete({ productName, username })
-    .then(removedItem => {
-      if (!removedItem) {
-        return res.status(404).json({ error: 'Item not found in cart' });
-      }
+    if (!removedItem) {
+      return res.status(404).json({ error: 'Item not found in cart' });
+    }
 
-      res.json({ message: 'Item deleted from cart successfully' });
-    })
-    .catch(error => res.status(500).json({ error: 'Failed to delete item from cart' }));
+    res.json({ message: 'Item deleted from cart successfully' });
+  } catch (error) {
+    console.error('Error while deleting item:', error);
+    res.status(500).json({ error: 'Failed to delete item from cart' });
+  }
 });
+
 
 
 module.exports = router;
