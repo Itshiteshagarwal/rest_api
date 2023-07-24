@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const cartSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.userId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User' // Use the correct model name ('User') to reference the User model.
   },
   products: [
