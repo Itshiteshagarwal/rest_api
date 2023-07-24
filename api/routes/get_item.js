@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const cors = require('cors'); 
 const Cart = require('../model/add_cart');
 
+
+router.use(cors({
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Add 'Authorization' to the allowedHeaders
+}));
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
   const { authorization } = req.headers;
