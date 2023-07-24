@@ -44,12 +44,12 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
     }
 
     // Check if the product already exists in the cart
-    const existingProductIndex = userCart.products.findIndex((product) => product.productId === productId);
+    const existingProduct = userCart.products.find((product) => product.productName === productName);
 
-    if (existingProductIndex !== -1) {
+    if (existingProduct) {
       // If the product exists, update the quantity and the product price
-      userCart.products[existingProductIndex].quantity += quantity;
-      userCart.products[existingProductIndex].productPrice += productPrice; // Update the product price based on the quantity
+      existingProduct.quantity += quantity;
+      existingProduct.productPrice += productPrice; // Update the product price based on the quantity
     } else {
       // If the product does not exist, add it to the cart
       userCart.products.push({
