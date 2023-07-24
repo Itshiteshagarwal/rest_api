@@ -16,16 +16,27 @@ router.delete('/remove_cart', async (req, res) => {
   const { username } = req.headers; // Get the 'username' from the request headers
 
   try {
-    // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndUpdate(
-      { username },
-      { $pull: { product: { productName } } },
-      { new: true } // Return the updated cart item after removal
+    // Find the cart item by productName and the associated username
+    const cartItem = await CartItem.findOne({ username });
+
+    if (!cartItem) {
+      return res.status(404).json({ error: 'Cart not found for the user' });
+    }
+
+    // Find the product index with the matching productName in the cart's products array
+    const productIndex = cartItem.products.findIndex(
+      (product) => product.productName === productName
     );
 
-    if (!removedItem) {
+    if (productIndex === -1) {
       return res.status(404).json({ error: 'Item not found in cart' });
     }
+
+    // Remove the product from the products array using splice method
+    cartItem.products.splice(productIndex, 1);
+
+    // Save the updated cart item
+    await cartItem.save();
 
     res.json({ message: 'Item deleted from cart successfully' });
   } catch (error) {
