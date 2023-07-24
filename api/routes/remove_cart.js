@@ -9,6 +9,8 @@ router.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Specify the allowed methods for CORS
   next();
 });
+
+
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
   // Assuming the username is stored in the request object after authentication
@@ -25,12 +27,12 @@ const authenticateUser = (req, res, next) => {
   next();
 };
 
-router.delete('/productId', authenticateUser, (req, res) => {
-  const productId = req.params.productId;
+router.delete('/remove-item', authenticateUser, (req, res) => {
+  const productName = req.body.productName;
   const username = req.username;
 
-  // Find the cart item by productId and the associated username and remove it
-  CartItem.findOneAndDelete({ productId, username })
+  // Find the cart item by productName and the associated username and remove it
+  CartItem.findOneAndDelete({ productName, username })
     .then(removedItem => {
       if (!removedItem) {
         return res.status(404).json({ error: 'Item not found in cart' });
