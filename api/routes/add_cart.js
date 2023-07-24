@@ -41,7 +41,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
 
     if (existingCart) {
       // Check if the product already exists in the cart
-      const existingProductIndex = existingCart.products.findIndex((product) => product.productName === productName);
+      const existingProductIndex = existingCart.products.findIndex((product) => product.productId === productId);
 
       if (existingProductIndex !== -1) {
         // If the product exists, update the quantity and the product price
@@ -79,6 +79,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
   }
 });
 
+// Get cart items for a user
 router.get('/cart_items', authenticateUser, async (req, res) => {
   const { userId } = req;
 
