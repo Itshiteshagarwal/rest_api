@@ -50,6 +50,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
       } else {
         // If the product does not exist, add it to the cart
         existingCart.products.push({
+          userId,
           productId,
           productName,
           productPrice,
@@ -64,6 +65,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
       const newCart = await Cart.create({
         userId,
         products: [{
+          userId,
           productId,
           productName,
           productPrice,
@@ -78,6 +80,5 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 module.exports = router;
