@@ -27,11 +27,11 @@ const authenticateUser = (req, res, next) => {
 
 // Add a product to the cart
 router.post('/add_to_cart', authenticateUser, async (req, res) => {
-  const { username, productId, productName, productPrice } = req.body;
+  const { username, productId, productName, productPrice, productImage } = req.body;
   const quantity = 1; // You can get the quantity from the request if needed
 
   // Validation: Check if all required data is present
-  if (!username || !productId || !productName || !productPrice) {
+  if (!username || !productId || !productName || !productPrice || !productImage) {
     return res.status(400).json({ error: 'Missing required data' });
   }
 
