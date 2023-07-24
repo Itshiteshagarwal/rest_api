@@ -4,9 +4,19 @@ const cors = require('cors');
 const Cart = require('../model/add_cart');
 
 // Set appropriate headers to allow frontend access
+router.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 router.use(cors({
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization', 'userId'],
 }));
+
+
+
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
