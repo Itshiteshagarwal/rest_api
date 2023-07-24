@@ -17,9 +17,10 @@ router.delete('/remove_cart', async (req, res) => {
 
   try {
     // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndDelete(
+    const removedItem = await CartItem.findOneAndUpdate(
       { username },
       { $pull: { product: { productName } } },
+      { new: true } // Return the updated cart item after removal
     );
 
     if (!removedItem) {
