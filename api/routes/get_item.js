@@ -16,21 +16,21 @@ const authenticateUser = (req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // Assuming the authorization header value is the userId
-  const userId = authorizationHeader;
+  // Assuming the authorization header value is the username
+  const username = authorizationHeader;
 
-  // Attach the authenticated userId to the request object for later use
-  req.userId = userId;
+  // Attach the authenticated username to the request object for later use
+  req.username = username;
   next();
 };
 
 // Get the cart data
 router.get('/cart_items', authenticateUser, async (req, res) => {
-  const { userId } = req;
+  const { username } = req;
 
   try {
     // Check if the cart exists for the user
-    const existingCart = await Cart.findOne({ userId });
+    const existingCart = await Cart.findOne({ userId: username });
 
     if (existingCart) {
       res.json({ cart: existingCart });
