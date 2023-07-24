@@ -12,14 +12,15 @@ router.use((req, res, next) => {
 
 // API endpoint to delete an item from the cart by product name
 router.delete('/remove_cart', async (req, res) => {
-  const { productName } = req.body;
+  const { productName } = req.query; // Use query parameter to get the product name
   const { username } = req.headers; // Get the 'username' from the request headers
 
   try {
     // Find the cart item by productName and the associated username and remove it
-    const removedItem = await CartItem.findOneAndDelete(
+    const removedItem = await CartItem.findOneAndUpdate(
       { username },
-      { $pull: { products: { Object:{ productName } } } },
+      { $pull: { products: { productName } } }, // Use productName to remove the specific product
+      { new: true }
     );
 
     if (!removedItem) {
