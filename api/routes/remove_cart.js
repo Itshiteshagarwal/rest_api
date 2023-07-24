@@ -27,7 +27,7 @@ const authenticateUser = (req, res, next) => {
   next();
 };
 
-router.delete('/remove-item', authenticateUser, (req, res) => {
+router.delete('/api/remove-item', authenticateUser, (req, res) => {
   const productName = req.body.productName;
   const username = req.username;
 
@@ -42,5 +42,6 @@ router.delete('/remove-item', authenticateUser, (req, res) => {
     })
     .catch(error => res.status(500).json({ error: 'Failed to delete item from cart' }));
 });
+
 
 module.exports = router;
