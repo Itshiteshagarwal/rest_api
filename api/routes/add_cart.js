@@ -12,35 +12,35 @@ router.use((req, res, next) => {
 
 // Middleware to handle user authentication
 const authenticateUser = (req, res, next) => {
-  const { userId } = req.body;
+  const { username } = req.body;
 
-  // Perform user authentication here (e.g., check the user ID against the database or JWT)
-  // For simplicity, we will assume the user is authenticated by checking if userId exists.
-  if (!userId) {
+  // Perform user authentication here (e.g., check the username against the database or JWT)
+  // For simplicity, we will assume the user is authenticated by checking if the username exists.
+  if (!username) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // Attach the authenticated userId to the request object for later use
-  req.userId = userId;
+  // Attach the authenticated username to the request object for later use
+  req.username = username;
   next();
 };
 
 // Add a product to the cart
 router.post('/add_to_cart', authenticateUser, async (req, res) => {
-  const { userId, productId, productName, productPrice } = req.body;
+  const { username, productId, productName, productPrice } = req.body;
   const quantity = 1; // You can get the quantity from the request if needed
 
   // Validation: Check if all required data is present
-  if (!userId || !productId || !productName || !productPrice) {
+  if (!username || !productId || !productName || !productPrice) {
     return res.status(400).json({ error: 'Missing required data' });
   }
 
   try {
     // Find the user's cart or create a new one if it doesn't exist
-    let userCart = await Cart.findOne({ userId });
+    let userCart = await Cart.findOne({ username });
 
     if (!userCart) {
-      userCart = await Cart.create({ userId, products: [] });
+      userCart = await Cart.create({ username, products: [] });
     }
 
     // Check if the product already exists in the cart
@@ -53,7 +53,7 @@ router.post('/add_to_cart', authenticateUser, async (req, res) => {
     } else {
       // If the product does not exist, add it to the cart
       userCart.products.push({
-        userId, // Include the userId in the product entry
+        username, // Include the username in the product entry
         productId,
         productName,
         productPrice,
