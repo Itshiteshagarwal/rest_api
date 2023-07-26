@@ -9,7 +9,7 @@ const cartSchema = new mongoose.Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product', // Use the correct model name ('Product') to reference the Product model.
+        ref: 'Product', 
         required: true,
       },
       productName: {
@@ -23,10 +23,10 @@ const cartSchema = new mongoose.Schema({
       quantity: {
         type: Number,
         default: 1,
-        min: 1, // Ensure the quantity is always at least 1.
+        min: 1, 
       },
       productImage: {
-        type: String, // Assuming the product image will be stored as a URL or file path.
+        type: String, 
         required: true,
       },
     },

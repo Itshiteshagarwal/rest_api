@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const User = require('../model/user');
 
-// Middleware to parse JSON requests (included in Express, no need for bodyParser)
+
 router.use(express.json());
 
-// Middleware to set up CORS headers and allow requests from any origin
 router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');

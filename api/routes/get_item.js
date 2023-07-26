@@ -15,20 +15,17 @@ const authenticateUser = (req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  // Assuming the authorization header value is the username
   const username = authorization;
 
-  // Attach the authenticated username to the request object for later use
+
   req.username = username;
   next();
 };
 
-// Get the cart data for the provided username
 router.get('/get_cart_items', authenticateUser, async (req, res) => {
   const { username } = req;
 
   try {
-    // Check if the cart exists for the user
     const existingCart = await Cart.findOne({ username });
 
     if (existingCart) {

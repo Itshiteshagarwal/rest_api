@@ -5,11 +5,11 @@ const bcrypt = require('bcrypt');
 const User = require('../model/user');
 const jwt = require('jsonwebtoken');
 
-// Enable CORS to allow requests from any frontend domain
+
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Methods', '*'); // Allow all methods (GET, POST, PUT, DELETE, etc.)
+    res.header('Access-Control-Allow-Methods', '*'); 
     next();
 });
 
@@ -32,14 +32,14 @@ router.post('/login', (req, res, next) => {
           return res.status(401).json({ msg: 'Password does not match' });
         }
 
-        // Password matches, create a JSON Web Token (JWT)
+    
         const token = jwt.sign(
           {
-            userId: user.userId, // Use the userId field, which is uniquely created for each product
+            userId: user.userId,
             username: user.username,
             email: user.email,
           },
-          'your_secret_key_here', // Replace 'your_secret_key_here' with your actual JWT secret key
+          'your_secret_key_here', 
           {
             expiresIn: '24h',
           }

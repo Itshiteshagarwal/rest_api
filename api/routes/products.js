@@ -14,7 +14,6 @@ router.get('/api/products', async (req, res) => {
   try {
     const { categoryId } = req.query;
 
-    // Assuming your Product model has a field called "categoryId" to filter products by category
     const products = await Product.find({ categoryId: categoryId }).sort({ price: 1 });
 
     res.json(products);
