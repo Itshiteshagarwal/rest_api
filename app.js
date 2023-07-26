@@ -13,6 +13,7 @@ const productRoute = require('./api/routes/products')
 const homeRoute = require('./api/routes/home')
 const addRoute = require('./api/routes/add_product')
 const updateRoute = require('./api/routes/update_product')
+const paymentRoute = require('./api/routes/paymentroute')
 
 mongoose.connect(process.env.MONGO_URL)
 
@@ -39,6 +40,7 @@ app.use('/',homeRoute);
 app.use(cors());
 app.use('/add_product',addRoute);
 app.use('/update_product',updateRoute);
+app.use('/paymentroute',paymentRoute);
 
 
 app.use((req,res,next)=>{
