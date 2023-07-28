@@ -1,0 +1,86 @@
+    /* CSS styles for the layout */
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set a global font and background color */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      justify-content: center;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    
+    .product {
+      width: calc(33.33% - 20px);
+      margin-bottom: 40px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    
+    .product img {
+      height: 200px; 
+      width: auto;
+      max-width: 300px;
+      margin-bottom: 10px;
+    }
+    
+    .product-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .product-price {
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart-btn {
+      background-color: #D7D67B;
+      color: #000;
+      border: 2px solid #000;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      transition-duration: 0.4s;
+    }
+    
+    .add-to-cart-btn:hover {
+      background-color: #BCBB61;
+    }
+    
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .product {
+        width: calc(50% - 20px);
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .product {
+        width: 100%;
+      }
+    }

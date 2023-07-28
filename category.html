@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-cart Shopping</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      height: 45px;
+      padding: 10px;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+	
+    /* LOGO */
+    .logo {
+      margin-right: 20px;
+    }
+
+    /* logo image */
+    .logo-img {
+      height: 40px; 
+    }
+
+    /* Header heading */
+    .head-head {
+      flex-grow: 1;
+      text-align: right;
+      margin-right: 10px;
+    }
+
+    /* Navigation bar */
+    nav {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      color: #D7D67B; 
+      text-decoration: underline; 
+    }
+    .logout {
+      background-color: #4E9781;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Adjust the position of the button within the list item */
+    
+    /* Center the button text within the button */
+    .logout {
+      justify-content: center;
+      align-items: center;
+    }
+    .logout:hover{
+      color: #D7D67B; 
+      text-decoration: underline;
+    }
+    
+    
+    /* Main content */
+    main {
+      background-color: #f2f2f2;
+      display: flex;
+      padding: 5px;
+      justify-content: space-between;
+    }
+
+    .container {
+      width: 15vw;
+      height: 68.3vh;
+      background-color: #D7D67B;
+      border: 1px solid #000;
+      padding: 10px;
+      
+    }
+
+    .con-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .con-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .con-item.selected{
+      background-color: #eaeaea;
+    }
+
+    .con-item:hover {
+      background-color: #eaeaea;
+    }
+
+    .container2 {
+      flex-grow: 1;
+      height: 71vh;
+      background-color: #fff;
+      border: 1px solid #000;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      clear: both;
+    }
+    
+    /* Footer links */
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>	
+    <div class="logo">
+    	<img src="logo.png" alt="E-Cart Shopping Logo" class="logo-img">
+    </div>
+    <div class="head-head">
+      <h1>E-Cart Shopping</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="category.html">Categories</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li>Welcome to the category page, <span id="username-placeholder"></span></li>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="container">
+      <ul class="con-list">
+        <li class="con-item selected" data-key="men" onclick="loadCategory(this,'men')">Men</li>
+        <li class="con-item" data-key="women" onclick="loadCategory(this,'women')">Women</li>
+        <li class="con-item" data-key="accessories" onclick="loadCategory(this,'accessories')">Accessories</li>
+        <li class="con-item" data-key="shoes" onclick="loadCategory(this,'shoes')">Shoes</li>
+      </ul>
+    </div>
+    <div class="container2">
+      <iframe id="content-frame" src="men.html" style="width: 100%; height: 100%; border: none;"></iframe>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2023 Shopping Website. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const username = localStorage.getItem("username");
+// Display the username in the welcome message or any other element
+document.getElementById("username-placeholder").innerText = username;
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryKey = urlParams.get('key');
+
+    // Use the categoryKey value to open the corresponding category
+    if (categoryKey) {
+      const iframe = parent.document.getElementById('content-frame');
+      iframe.src = categoryKey + '.html';
+
+      const conItems = parent.document.getElementsByClassName('con-item');
+      for (let i = 0; i < conItems.length; i++) {
+        conItems[i].classList.remove('selected');
+      }
+
+      const selectedElement = parent.document.querySelector('.con-item[data-key="' + categoryKey + '"]');
+      if (selectedElement) {
+        selectedElement.classList.add('selected');
+      }
+    }
+
+    function loadCategory(element, category) {
+      var iframe = document.getElementById('content-frame');
+      iframe.src = category + '.html';
+
+      var conItems = document.getElementsByClassName('con-item');
+      for (var i = 0; i < conItems.length; i++) {
+        conItems[i].classList.remove('selected');
+      }
+
+      element.classList.add('selected');
+
+    }
+    function logout() {
+      // Clear the JWT token from local storage
+      localStorage.removeItem("jwtToken");
+
+      // Redirect to the login page after logout
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>

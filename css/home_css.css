@@ -1,0 +1,310 @@
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Set a global font and background color */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+	
+    /* LOGO */
+    .logo {
+      margin-right: 20px;
+    }
+
+    /* logo image */
+    .logo-img {
+      height: 40px; 
+    }
+
+    /* Header heading */
+    .head-head {
+	flex-grow: 1;
+	text-align: right;
+        margin-right: 10px;
+    }
+
+
+
+    /* Navigation bar */
+    nav {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+    .logout {
+      background-color: #4E9781;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    
+    /* Adjust the position of the button within the list item */
+    
+    /* Center the button text within the button */
+    .logout {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logout:hover{
+      color: #D7D67B; 
+      text-decoration: underline;
+    }
+    
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      color: #D7D67B; 
+      text-decoration: underline; 
+    }
+
+    /* Main content */
+    main {
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    /* Carousel section */
+    .carousel-wrapper {
+      flex: 0 0 100%;
+      margin-bottom: 70px;
+ 
+    }
+
+    .owl-carousel .item img {
+      width: 100%;
+      height: auto;
+    }
+
+    /* Main heading */
+    .heading {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 40px; 
+      font-weight: bold; 
+      font-family: Brush Script MT; 
+      text-decoration-line: underline;
+    }
+
+    /* Category section */
+    .category-container {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      padding: 10px;
+      justify-content: space-between;
+    }
+
+    .category {
+      padding: 20px;
+      width: 300px;
+      height: 300px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      background-color: #D7D67B;
+      border: 2px solid #000;
+      border-radius: 3px;
+    }
+
+    .category-section h2 {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }   
+
+    .category img {
+      display: block;
+      margin: 0 auto;
+      width: auto;
+      height: 150px;
+    }
+    
+    /* See More button */
+    .see-more-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .see-more-button a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background-color 0.3s ease;
+    }
+
+    .see-more-button a:hover {
+      background-color: #555;
+    }
+
+    /* Responsive layout */
+    @media only screen and (max-width: 768px) {
+      .product {
+        flex: 0 0 48%;
+        margin: 0 1% 20px;
+      }
+
+      .category {
+        width: calc(50% - 20px);
+      }     
+    }
+
+    @media only screen and (max-width: 480px) {
+      .product {
+        flex: 0 0 100%;
+      }
+ 
+      .category {
+        width: 100%;
+      }
+    }
+
+    /* Brand section */
+    .brand-section {
+      background-color: #f4f4f4;
+      padding: 20px 0;
+      margin-bottom: 10px;
+      margin-top: 20px;
+    }
+
+    .brand-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .brand-logo {
+      margin: 0 45px;
+    }
+
+    .brand-logo img {
+      max-height: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .brand-container {
+        flex-wrap: wrap;
+      }
+  
+      .brand-logo {
+        margin: 10px;
+      }
+  
+      .brand-logo img {
+        max-height: 40px;
+      }
+    }
+
+    /* about us */
+
+    .about-us {
+      text-align: center;
+    }
+    
+    .about-us .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .about-us .col-lg-5 {
+      flex: 0 0 50%;
+      order: 2;
+      text-align: right;
+    }
+    
+    .card-img {
+      width: 60%;
+      height: 60%;
+      margin-right: 80px;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .about-us .col-lg-7 {
+      margin-top: 20px;
+      margin-bottom: 40px;
+      flex: 0 0 40%;
+      text-align: left;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 20px;
+    }
+    
+    /* Responsive CSS */
+    @media (max-width: 992px) {
+      .about-us .col-lg-5,
+      .about-us .col-lg-7 {
+        flex: 0 0 100%;
+        order: 0;
+        text-align: center;
+      }
+      
+      .card-img {
+        width: 100%;
+        height: auto;
+        margin-right: 0;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+    }
+    
+    
+    
+
+    /* Footer */
+    footer {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    /* Footer links */
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }

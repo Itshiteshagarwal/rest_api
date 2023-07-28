@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-Cart Shopping</title>
+
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="./css/home_css.css">  
+
+</head>
+<body>
+  <header>	
+    <div class="logo">
+    	<img src="logo.png" alt="E-Cart Shopping Logo" class="logo-img">
+    </div>
+    <div class="head-head">
+	<h1>E-Cart Shopping</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="category.html">Categories</a></li>
+      <li><a href="cart.html">Cart</a></li>
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li>welcome to the home page, <span id="username-placeholder"></span></li>
+    </ul>
+      
+      
+  </nav>
+  <main>
+    <h1 class="heading">Our Trending's Carousel</h1>
+    <section class="carousel-section">
+
+      <div class="carousel-wrapper">
+        <div class="owl-carousel">
+          <div class="item"><img src="image\carousel\1.jpg" alt="Image 1"></div>
+          <div class="item"><img src="image\carousel\2.jpg" alt="Image 2"></div>
+          <div class="item"><img src="image\carousel\3.jpg" alt="Image 3"></div>
+          <div class="item"><img src="image\carousel\4.jpg" alt="Image 4"></div>
+	  <div class="item"><img src="image\carousel\5.jpg" alt="Image 5"></div>
+          <div class="item"><img src="image\carousel\6.jpg" alt="Image 6"></div>
+        </div>
+      </div>
+
+    </section>
+	
+    <section class="category-section">
+
+     <h2 class="heading">Categories</h2>
+
+      <div class="category-container">
+        <div class="category">
+	  <h2>Men</h2>
+          <img src="image\men\123.png" alt="Category 1">
+          <div class="see-more-button">
+             <a href="category.html?key=men">See More</a>
+          </div>
+        </div>
+
+        <div class="category">
+	  <h2>Women</h2>
+          <img src="image\women\111.png" alt="Category 2">
+          <div class="see-more-button">
+             <a href="category.html?key=women">See More</a>
+          </div>
+        </div>  
+
+        <div class="category">
+	  <h2>Accessories</h2>
+          <img src="image\accessory\watch.png" alt="Category 3">
+          <div class="see-more-button">
+             <a href="category.html?key=accessories">See More</a>
+          </div>
+        </div> 
+
+        <div class="category">
+	  <h2>Shoes</h2>
+          <img src="image\Shoes\shoes.png" alt="Category 4">
+          <div class="see-more-button">
+             <a href="category.html?key=shoes">See More</a>
+          </div>
+        </div> 
+      
+      </div>
+    </section> 
+
+    <section class="brand-section">
+     
+      <h2 class="heading">Sponsored by</h2>
+
+      <div class="brand-container">
+        <div class="brand-logo"><img src="image\brand\1.png" alt="Brand 1"></div>
+        <div class="brand-logo"><img src="image\brand\2.png" alt="Brand 2"></div>
+        <div class="brand-logo"><img src="image\brand\3.png" alt="Brand 3"></div>
+        <div class="brand-logo"><img src="image\brand\4.png" alt="Brand 4"></div>
+        <div class="brand-logo"><img src="image\brand\5.png" alt="Brand 5"></div>
+        <div class="brand-logo"><img src="image\brand\6.png" alt="Brand 6"></div>
+        <div class="brand-logo"><img src="image\brand\7.png" alt="Brand 7"></div>
+      </div>
+    </section> 
+
+    <section class="about-us">
+      <h2 class="heading">About us</h2>
+
+      <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-5 col-12">
+                <div class="card rounded-3 shadow">
+                    <img src="./image/main.jpg" alt="" class="card-img">
+                </div>
+            </div>
+            <div class="col-lg-7 col-12">
+                <h2 class="display-3 text-dark">What Is the Secret of Digitally Successful Fashion Labels and E-commerce?</h2> <br>
+                <p class="text-muted lead">
+                    There is a tale behind every success story. Product marketing, in particular, is not just about usefulness or originality. Today's customers want a "tangible" product. And here fresh and believable content is required. The ultimate goal is to bring clothing and accessories to life with words and images. Users should feel compelled to own the product. For fashion content, that means they don't just buy a new item. Before buying they want to feel the material on their skin, see it in their mind and combine it with their wardrobe..</p>
+                    <p class="text-muted lead">by-hitesh agarwal</p>
+            </div>
+        </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Shopping Website. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+   <!-- Owl Carousel JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: false,
+        dots: false,
+        autoplay: true, // Enable autoplay
+        autoplayTimeout: 3000, // Set autoplay interval (in milliseconds)
+        responsive: {
+          0: {
+            items: 1
+          },
+          768: {
+            items: 2
+          },
+          1024: {
+            items: 3
+          }
+        }
+      });
+    });
+    function checkAuthentication() {
+      const jwtToken = localStorage.getItem("jwtToken");
+      if (!jwtToken) {
+        // If the token does not exist, redirect the user to the login page
+        window.location.href = "login.html";
+      } else {
+        // If the token exists, decode it to get user information (e.g., username and user ID)
+        const decodedToken = JSON.parse(atob(jwtToken.split(".")[1]));
+        const userId = decodedToken.user_id;
+        const username = decodedToken.username;
+
+        // Store the user ID and username in local storage
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("username", username);
+
+        // Display the username on the home page
+        document.getElementById("username-placeholder").innerText = username;
+      }
+    }
+
+    // Call the function to check authentication when the document is ready
+    $(document).ready(function () {
+      checkAuthentication();
+
+      // Initialize the Owl Carousel
+      $('.owl-carousel').owlCarousel({
+        // ... (carousel settings)
+      });
+    });
+
+    // Function to handle user logout
+    function logout() {
+      // Clear the user ID and JWT token from local storage
+      localStorage.removeItem("userId");
+      localStorage.removeItem("jwtToken");
+
+      // Redirect to the login page after logout
+      window.location.href = "login.html";
+    }
+
+  </script>
+
+</body>
+</html>

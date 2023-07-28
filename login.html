@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+      /* Reset CSS for box-sizing and margins/paddings */
+      *, *:before, *:after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Header */
+      header {
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* LOGO */
+      .logo {
+        margin-right: 20px;
+      }
+
+      /* logo image */
+      .logo-img {
+        height: 40px;
+      }
+
+      /* Header heading */
+      .head-head {
+        flex-grow: 1;
+        margin-right: 10px;
+        text-align: right;
+      }
+
+      /* Navigation bar */
+      nav {
+        background-color: #4E9781;
+        color: #fff;
+        padding: 10px 0;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      nav ul li {
+        display: inline-block;
+        margin: 0 10px;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      nav ul li a:hover {
+        color: #D7D67B;
+        text-decoration: underline;
+      }
+
+      body {
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        background: #ffffff;
+      }
+
+      .box1{
+         padding: 10px 80px;
+         text-align: center;
+         width: 40%;
+         height: 170px;
+         margin: 10vh 2.5%;
+      }
+
+      .box {
+        background-color: #f0f0f0;
+        padding: 20px;
+        text-align: center;
+        border: 2px solid #4E9781;
+        width: 50%;
+        height: 60vh;
+        margin: 7.5vh 2.5%;
+      }
+
+      /* Styling the welcome message heading */
+      .welcome-msg {
+        text-align: center;
+        font-family: 'Georgia', serif;
+        font-size: 50px;
+        color: #E5E41B;
+        -webkit-text-stroke: 1.5px #000;
+        text-stroke: 1.5px #000;
+      }
+
+      /* Styling the paragraphs inside the welcome-box */
+      .welcome-msg p {
+        font-family: 'Brush Script MT', cursive;
+        padding: 5px 70px 0px 70px; 
+        font-size: 30px;
+        color: #000;
+        line-height: 1.6;
+      }
+
+      /* Flexbox to arrange boxes side by side */
+      .box-container {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .login-container {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+      padding: 10px;
+      max-width: 700px;
+      max-height: 700px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 40px;
+      font-family: 'Times New Roman';
+      font-size: 50px;
+      color: #333;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-form input {
+      display: block;
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 20px;
+      font-style: 'Times New Roman';
+    }
+
+    .login-form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .login-form button.login {
+      background-color: #4CAF50;
+      margin: 5px;
+      width: 200px;
+    }
+
+    .login-form button.signup {
+      background-color: #008CBA;
+      margin: 5px;
+      width: 200px;
+    }
+
+    .login-form button:hover {
+      opacity: 0.8;
+    }
+
+    .forgot-password {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .forgot-password a {
+      color: #008CBA;
+      text-decoration: none;
+    }
+
+      /* Footer */
+      footer {
+        background-color: #4E9781;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+      }
+
+      /* Footer links */
+      .footer-links {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .footer-links a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+      }
+
+      /* Responsive layout adjustments */
+      @media screen and (max-width: 768px) {
+        .box-container {
+          flex-wrap: wrap;
+        }
+        .box1 {
+          width: 100%;
+          margin: 0;
+          padding: 0px;
+          margin-top: 10px;
+          margin-bottom: 0px;
+        }
+        .box {
+          width: 100%;
+          margin-top: 0px;
+          margin-bottom: 10px;
+          
+        }
+        .welcome-msg {
+          font-size: 40px;
+        }
+      }
+
+    </style>
+
+  </head>
+  <body>
+
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="E-Cart Shopping Logo" class="logo-img">
+      </div>
+      <div class="head-head">
+        <h1>E-Cart Shopping</h1>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+
+    <div class="box-container">
+      <div class="box1">
+        <div class="welcome-msg">
+      <h2>Welcome to HappyCart!</h2>
+    </div>
+      </div>
+
+      <div class="box">
+        <div class="login-container">
+          <h2>Login</h2>
+          <form class="login-form" onsubmit="login(event)">
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login">Login</button>
+            <span id="error-message" style="color: red;"></span>
+          </form>
+          <div class="forgot-password">
+            <a href="signup.html">You are not a user? please sign up</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function login(event) {
+        event.preventDefault();
+    
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const errorMessage = document.getElementById("error-message");
+    
+        try {
+          const response = await fetch("https://rest-api5.onrender.com/user_login/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+    
+          const data = await response.json();
+    
+          if (response.ok) {
+            // Save JWT token and username to local storage
+            localStorage.setItem("jwtToken", data.token);
+            localStorage.setItem("username", username); // Save the username instead of userId
+    
+            // Redirect to home.html after successful login
+            window.location.href = "home.html";
+          } else {
+            // Handle login error (show error message)
+            errorMessage.innerText = data.msg || "Login failed: Something went wrong.";
+          }
+        } catch (error) {
+          console.error("Error occurred during login:", error);
+          errorMessage.innerText = "Login failed: Server error.";
+        }
+      }
+    </script>
+  <footer>
+      <div class="container">
+        <p>&copy; 2023 Shopping Website. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Terms of Service</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </div>
+    </footer>  
+
+  </body>
+</html>
+

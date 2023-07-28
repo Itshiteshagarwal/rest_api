@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    /* Header */
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* LOGO */
+    .logo {
+      margin-right: 20px;
+    }
+
+    /* logo image */
+    .logo-img {
+      height: 40px;
+    }
+
+    /* Header heading */
+    .head-head {
+      flex-grow: 1;
+      text-align: right;
+      margin-right: 10px;
+    }
+
+    /* Navigation bar */
+    nav {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Cart page */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .cart-items {
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    .cart-item-image {
+      width: 80px;
+      height: 80px;
+      margin-right: 10px;
+    }
+
+    .cart-item-details {
+      flex-grow: 1;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-price {
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+    }
+
+    .quantity-label {
+      margin-right: 5px;
+    }
+
+    .quantity-input {
+      width: 50px;
+      text-align: center;
+    }
+
+    .cart-item-total {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .remove-button {
+      background-color: #FF4500;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      transition-duration: 0.4s;
+    }
+
+    .remove-button:hover {
+      background-color: #DC143C;
+    }
+
+    .total-amount {
+      text-align: right;
+      font-weight: bold;
+      margin-bottom: 10px; /* Added margin */
+    }
+
+    .place-order-button {
+      text-align: right;
+    }
+
+    .place-order-button button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      transition-duration: 0.4s;
+    }
+
+    .place-order-button button:hover {
+      background-color: #45a049;
+    }
+
+    .empty-cart-message {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      .cart-item {
+        flex-wrap: wrap;
+      }
+
+      .cart-item-image {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .cart-item-details {
+        flex: 0 0 100%;
+      }
+
+      .cart-item-quantity {
+        justify-content: flex-end;
+        margin-top: 5px;
+      }
+
+      .quantity-label {
+        margin-right: 0;
+        margin-left: 5px;
+      }
+
+      .quantity-input {
+        width: 40px;
+      }
+    }
+
+    /* Footer */
+    footer {
+      background-color: #4E9781;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Footer links */
+    .footer-links {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="E-Cart Shopping Logo" class="logo-img">
+    </div>
+    <div class="head-head">
+      <h1>E-Cart Shopping</h1>
+    </div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="category.html">Categories</a></li>
+      <li><a href="#">Cart</a></li>
+      <li><a href="login.html">Login</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Your Cart</h1>
+
+    <div class="cart-items">
+      <div class="cart-item">
+        <img class="cart-item-image" src="product1.jpg" alt="Product 1">
+        <div class="cart-item-details">
+          <div class="cart-item-name">Product 1</div>
+          <div class="cart-item-price">$19.99</div>
+          <div class="cart-item-quantity">
+            <label class="quantity-label">Quantity:</label>
+            <input class="quantity-input" type="number" value="1" min="1" onchange="updateTotal(this)">
+          </div>
+          <div class="cart-item-total">$19.99</div>
+        </div>
+        <button class="remove-button" onclick="removeItem(this)">Remove</button>
+      </div>
+
+      <div class="cart-item">
+        <img class="cart-item-image" src="product2.jpg" alt="Product 2">
+        <div class="cart-item-details">
+          <div class="cart-item-name">Product 2</div>
+          <div class="cart-item-price">$29.99</div>
+          <div class="cart-item-quantity">
+            <label class="quantity-label">Quantity:</label>
+            <input class="quantity-input" type="number" value="1" min="1" onchange="updateTotal(this)">
+          </div>
+          <div class="cart-item-total">$29.99</div>
+        </div>
+        <button class="remove-button" onclick="removeItem(this)">Remove</button>
+      </div>
+    </div>
+
+    <div class="total-amount">Total Amount: $49.98</div>
+
+    <div class="place-order-button">
+      <button onclick="placeOrder()">Place Order</button>
+    </div>
+
+    <div class="empty-cart-message" id="empty-cart-message" style="display: none;">Your cart is empty</div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 Shopping Website. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function updateTotal(input) {
+      const quantity = input.value;
+      const itemContainer = input.parentNode.parentNode;
+      const priceElement = itemContainer.querySelector(".cart-item-price");
+      const totalElement = itemContainer.querySelector(".cart-item-total");
+
+      const price = parseFloat(priceElement.textContent.slice(1));
+      const total = price * quantity;
+      totalElement.textContent = "$" + total.toFixed(2);
+
+      updateCartTotal();
+    }
+
+    function removeItem(button) {
+      const itemContainer = button.parentNode;
+      itemContainer.remove();
+
+      updateCartTotal();
+
+      const cartItems = document.querySelectorAll(".cart-item");
+      const emptyCartMessage = document.getElementById("empty-cart-message");
+
+      if (cartItems.length === 0) {
+        emptyCartMessage.style.display = "block";
+      }
+    }
+
+    function updateCartTotal() {
+      const totalElements = document.querySelectorAll(".cart-item-total");
+      let cartTotal = 0;
+
+      totalElements.forEach((element) => {
+        const price = parseFloat(element.textContent.slice(1));
+        cartTotal += price;
+      });
+
+      const totalAmountElement = document.querySelector(".total-amount");
+      totalAmountElement.textContent = "Total Amount: $" + cartTotal.toFixed(2);
+    }
+
+    function placeOrder() {
+      // Implement your place order logic here
+      alert("Your order has been placed!");
+    }
+  </script>
+</body>
+</html>
