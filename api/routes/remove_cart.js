@@ -15,28 +15,26 @@ router.delete('/remove_cart', async (req, res) => {
   const { username } = req.headers; 
 
   try {
-    // cart item by productName and the associated username
+
     const cartItem = await CartItem.findOne({ username });
 
     if (!cartItem) {
       return res.status(404).json({ error: 'Item not found in cart' });
     }
 
-    // specific product in the cart by productName
+  
     const productToRemove = cartItem.products.find(product => product.productName === productName);
 
     if (!productToRemove) {
       return res.status(404).json({ error: 'Product not found in cart' });
     }
 
-    // If the quantity is greater than 1, decrement the quantity by 1
     if (productToRemove.quantity > 1) {
       productToRemove.quantity -= 1;
     } else {
       cartItem.products = cartItem.products.filter(product => product.productName !== productName);
     }
 
-    // Save the updated cart item
     await cartItem.save();
 
     res.json({ message: 'Item removed from cart successfully' });

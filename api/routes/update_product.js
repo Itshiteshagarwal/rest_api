@@ -22,7 +22,6 @@ router.patch('/update_quantity_by_name', async (req, res) => {
       return res.status(404).json({ error: 'Item not found in cart' });
     }
 
-    // Update the product quantity
     cartItem.products.forEach((product) => {
       if (product.productName === productName) {
         product.quantity = quantity;

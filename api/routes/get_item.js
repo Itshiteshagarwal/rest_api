@@ -7,7 +7,7 @@ const Cart = require('../model/add_cart');
 router.use(cors({
   allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization'], // Add 'Authorization' to the allowedHeaders
 }));
-// Middleware to handle user authentication
+
 const authenticateUser = (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -31,7 +31,7 @@ router.get('/get_cart_items', authenticateUser, async (req, res) => {
     if (existingCart) {
       res.json({ cart: existingCart });
     } else {
-      res.json({ cart: { products: [] } }); // Return an empty cart if it doesn't exist for the user
+      res.json({ cart: { products: [] } }); 
     }
   } catch (error) {
     console.error('Error while fetching cart items:', error);

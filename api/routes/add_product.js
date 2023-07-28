@@ -12,7 +12,6 @@ router.post('/api/products', async (req, res) => {
       return res.status(400).json({ error: 'Product with the same productId already exists' });
     }
 
-    // Create a new product instance based on the Product model
     const product = new Product({
       productId,
       name,
@@ -22,7 +21,6 @@ router.post('/api/products', async (req, res) => {
       image,
     });
 
-    // Save the product to the database
     const savedProduct = await product.save();
     res.status(201).json({ message: 'Product created successfully', product: savedProduct });
   } catch (err) {

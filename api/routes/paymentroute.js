@@ -14,7 +14,6 @@ const razorpay = new Razorpay({
   key_secret: 'g1yn4ZhwU63zfhqV84tYQ0hU', 
 });
 
-// Endpoint to create a Razorpay order
 router.post('/api/create-order', async (req, res) => {
   try {
     const { username, amount } = req.body;

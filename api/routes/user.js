@@ -14,32 +14,30 @@ router.use((req, res, next) => {
   next();
 });
 
-// Middleware to log the parsed req.body (for debugging)
+
 router.use((req, res, next) => {
   console.log('Parsed req.body:', req.body);
   next();
 });
 
-// User Signup Route
+
 router.post('/signup', (req, res, next) => {
   const { username, email, password } = req.body;
 
-  // Check if username or email already exists
+
   User.findOne({ $or: [{ username }, { email }] })
     .exec()
     .then(existingUser => {
       if (existingUser) {
-        // Username or email already exists, send an error response
+
         return res.status(409).json({ error: 'Username or email already exists' });
       }
 
-      // Hash the password using bcrypt
       bcrypt.hash(password, 10, (err, hash) => {
         if (err) {
           return res.status(500).json({ error: 'Password hashing failed' });
         }
 
-        // Create a new User object with the hashed password
         const newUser = new User({
           _id: new mongoose.Types.ObjectId(),
           username,
@@ -47,7 +45,6 @@ router.post('/signup', (req, res, next) => {
           password: hash,
         });
 
-        // Save the new user to the database
         newUser.save()
           .then(result => {
             console.log(result);
